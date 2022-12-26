@@ -3,9 +3,29 @@ import "bootstrap/dist/js/bootstrap";
 import PokemonCards from "./components/PokemonCards/PokemonCards";
 import { useState, useEffect } from "react";
 import Pagination from "./components/Pagination/Pagination";
+import Navbar from "./components/Navbar/Navbar";
 import placeholderPic from "./images/sandslash-silhouette-png.png"
+import pokedexPic from "./images/pokedex.png"
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import PokemonCardDetails from "./components/PokemonCards/PokemonCardDetails";
 
 function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Navbar pokedexPic = {pokedexPic}/>
+      </div>
+
+      <Routes>
+      <Route path="/" element = {<Home/>}/>
+      <Route path="/:id" element = {<PokemonCardDetails/>}/>
+      </Routes>
+    </Router>
+  )
+}
+
+
+const Home = () => {
 
   // state variables
   let [fetchedData, setFetchedData] = useState([])
@@ -49,8 +69,7 @@ function App() {
 
   return (
     <div className="App">
-        <h1 className="display-4 fw-bold text-center text-danger m-4">PokeDex</h1>
-  
+    
         <Pagination
             setPageOffset = {setPageOffset}
             />
@@ -58,6 +77,7 @@ function App() {
           <div className="container">
             <div className="row">
             <PokemonCards
+                page = "/"
                 results = {fetchedData}
                 placeholderPic = {placeholderPic}
             />

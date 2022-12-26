@@ -1,7 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-
-const PokemonCards = ({results, placeholderPic}) => {
+const PokemonCards = ({page, results, placeholderPic}) => {
   let displayCards;
   const typeColorsArray =
     {
@@ -28,10 +28,17 @@ const PokemonCards = ({results, placeholderPic}) => {
   if (results){
   
     displayCards = results.map((pokemon) => {
-      let {name, order, abilities, sprites, types, id} = pokemon
-     
+      let {name, abilities, sprites, types, id} = pokemon
+      let abilityName = ""
       let abilityEls = abilities.map((a, index) => {
-        return (index === abilities.length - 1 ? a.ability.name : a.ability.name+", ")
+        if (a.ability.name.includes("-")){
+          abilityName = a.ability.name.replace("-", " ")
+        }
+        else {
+          abilityName = a.ability.name
+        }
+
+        return (index === abilities.length - 1 ? abilityName : abilityName+", ")
       })
 
       let typeEls = types.map((t, index) => {
@@ -48,9 +55,16 @@ const PokemonCards = ({results, placeholderPic}) => {
       }
      
       return(
-        <div 
+        <Link 
+          to={`${page}${id}`}
           key={id}
-          style = {{backgroundColor : bgColor}}
+          style = {
+            {
+              backgroundColor : bgColor,
+              textDecoration : "none",
+              color : "black"
+            }
+          }
           className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 border border-3 border-dark">
          <div className="d-flex justify-content-center flex-column p-3">
           <div className="d-flex justify-content-between mb-2">
@@ -61,7 +75,7 @@ const PokemonCards = ({results, placeholderPic}) => {
               }
             }
             className="fw-bold fs-3">{name}</div>
-          <div className="fs-4 mt-1">No. <span className="fw-bold">{order}</span> </div>
+          <div className="fs-4 mt-1">No. <span className="fw-bold">{id}</span> </div>
           </div>
           <img 
             className='img-fluid border border-3 border-dark bg-light' 
@@ -70,7 +84,7 @@ const PokemonCards = ({results, placeholderPic}) => {
           <div className="mt-2 fs-4"><span className="fw-bold">Type:</span> {typeEls}</div>
           <div className="mt-2 fs-4"> <span className="fw-bold">Abilties:</span> {abilityEls}</div>
          </div>
-        </div>
+        </Link>
       )
     })
   }

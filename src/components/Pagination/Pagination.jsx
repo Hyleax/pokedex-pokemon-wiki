@@ -8,7 +8,7 @@ const Pagination = ({setPageOffset}) => {
     return (
     <ReactPaginate
         pageCount={58}
-        className = "fs-4 pagination justify-content-center gap-4 my-5"
+        className = "fs-4 pagination justify-content-center gap-4 my-5 py-2"
         nextLabel = "Next"
         previousLabel = "Prev"
         nextClassName='bg-dark border border-danger p-2'
