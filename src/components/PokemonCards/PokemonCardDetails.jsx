@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import TypeBadge from './TypeBadge'
+import PokemonStats from './PokemonStats'
 
 const PokemonCardDetails = () => {
     const typeColorsArray =
@@ -27,8 +28,12 @@ const PokemonCardDetails = () => {
 
     let {id} = useParams()
     let [fetchedData, setFetchedData] = useState([])
-    let {name, height, weight, sprites, abilities, types} = fetchedData
+    let {name, height, weight, sprites, abilities, types, stats} = fetchedData
 
+
+    console.log(stats);
+
+    // mapping abilities
     let abilityName = ""
     let abilityEls = abilities?.map((a, index) => {
         if (a.ability.name.includes("-")){
@@ -41,9 +46,10 @@ const PokemonCardDetails = () => {
         return (index === abilities.length - 1 ? abilityName : abilityName+", ")
       })
 
-      let badgeCol = ""
-      let typeName = ""
-      let badgeEls = types?.map((t) => {
+    // mapping pokemon types
+    let badgeCol = ""
+    let typeName = ""
+    let badgeEls = types?.map((t) => {
         for (let c in typeColorsArray){
             if (t.type.name === c){
                 badgeCol = typeColorsArray[c]
@@ -52,12 +58,33 @@ const PokemonCardDetails = () => {
         }
         return(
             <TypeBadge
+                key={typeName}
                 typeName = {typeName}
                 color = {badgeCol}
             />
         )
-      })
+    })
 
+    // mapping pokemon stats
+    let statEls = stats?.map((s) => {
+        let replacedStatName = ""
+        if (s.stat.name === 'special-attack'){
+            replacedStatName = "Sp. Atk"
+        }
+        else if (s.stat.name === 'special-defense') {
+            replacedStatName = "Sp. Def"
+        }
+        else {
+            replacedStatName = s.stat.name
+        }
+        return(
+            <PokemonStats
+            statName = {replacedStatName}
+            statValue = {s.base_stat}    
+        />
+        )
+        
+    })
     
 
 
@@ -68,15 +95,14 @@ const PokemonCardDetails = () => {
             async function() {
                 let data = await fetch(api).then(res => res.json())
                 setFetchedData(data)
-                console.log(data);
             }
         )()
     }, [api])
     
         return (
-            <div className="container-lg mt-4">
-                <div className="row text-light">
-                    <div className="col-lg-5 col-12 border-danger border-end border-2">
+            <div className="container-lg mt-5 text-light">
+                <div className="row">
+                    <div className="col-lg-4 col-12 border-danger border-end border-2">
                         <div className="d-flex flex-column justify-content-center p-4">
                             <img 
                                 src= {sprites?.front_default} 
@@ -87,7 +113,7 @@ const PokemonCardDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-7 col-12">
+                    <div className="col-lg-8 col-12">
                         <div className="mx-4">
                             <p className='text-center display-5'>
                                 <u>PokeDex data</u>
@@ -95,15 +121,15 @@ const PokemonCardDetails = () => {
                             <div className="d-flex flex-column gap-4 mt-5 fs-1 text-danger">
                             <div>
                                 <span className="text-light">National Dex ID: </span>
-                                {id}
+                                No. {id}
                             </div>
                             <div>
-                                <span className="text-light">Height(m): </span>
-                                {(height/10).toFixed(1)}
+                                <span className="text-light">Height: </span>
+                                {(height/10).toFixed(1)} m
                             </div>
                             <div>
-                                <span className="text-light">Weight(kg): </span>
-                                {(weight/10).toFixed(1)}
+                                <span className="text-light">Weight: </span>
+                                {(weight/10).toFixed(1)} kg
                             </div>
                             <div
                                 style={{textTransform: "Capitalize"}}
@@ -117,6 +143,18 @@ const PokemonCardDetails = () => {
                                 {badgeEls}
                             </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="mt-5">
+                        <p className='text-center display-5 mb-4'>
+                            <u>Base stats</u>
+                        </p>
+
+                        <div className="container-sm mb-4">
+                            {statEls}
                         </div>
                     </div>
                 </div>
