@@ -18,8 +18,8 @@ const PokemonStats = ({statName, statValue}) => {
             <div className="d-flex justify-content-center align-items-center">
                 <div 
                     style={{textTransform: "capitalize"}}
-                    className="col-lg-2 col-2 fs-2 text-end">{statName}</div>
-                <div className="col-lg-2 col-2 fs-2 text-center text-danger">{statValue}</div>
+                    className="col-lg-2 col-3 fs-2 text-end">{statName}</div>
+                <div className="col-lg-2 col-3 fs-2 text-center text-danger">{statValue}</div>
                 <div 
                     style = {{height : "24px"}}
                     className="progress col-lg-5 col-6">

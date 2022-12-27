@@ -18,7 +18,7 @@ function App() {
 
       <Routes>
       <Route path="/" element = {<Home/>}/>
-      <Route path="/:id" element = {<PokemonCardDetails/>}/>
+      <Route path="/:id" element = {<PokemonCardDetails placeholderPic = {placeholderPic}/>}/>
       </Routes>
     </Router>
   )
@@ -61,7 +61,7 @@ const Home = () => {
   //   (
   //     async function() {
   //       let data = await fetch(searchAPI).then(res => res.json())
-  //       console.log(data);      
+  //       (data);      
   //       setFetchedData([data])
   //     }
   //   )()

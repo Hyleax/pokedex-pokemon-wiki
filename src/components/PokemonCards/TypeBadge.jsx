@@ -1,14 +1,13 @@
 import React from 'react'
 
 const TypeBadge = ({typeName, color}) => {
-    console.log(typeName);
-
     return (
         <div>
             <h1 
             style={
                 {
-                    backgroundColor : `${color}`
+                    backgroundColor : `${color}`,
+                    minWidth : "70px"
                 }
             }
             className='badge'>{typeName.toUpperCase()}</h1>

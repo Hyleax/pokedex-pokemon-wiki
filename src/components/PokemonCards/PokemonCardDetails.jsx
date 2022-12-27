@@ -2,36 +2,14 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import TypeBadge from './TypeBadge'
 import PokemonStats from './PokemonStats'
+import PokemonMoves from './PokemonMoves'
+import pokemonTypeColors from '../pokemonTypeColors.js'
 
-const PokemonCardDetails = () => {
-    const typeColorsArray =
-    {
-      normal : '#A8A77A',
-      fire : '#EE8130',
-      water : '#6390F0',
-      electric : '#F7D02C',
-      grass : '#7AC74C',
-      ice : '#96D9D6',
-      fighting : '#C22E28',
-      poison : '#A33EA1',
-      ground : '#E2BF65',
-      flying : '#A98FF3',
-      psychic : '#F95587',
-      bug : '#A6B91A',
-      rock : '#B6A136',
-      ghost : '#735797',
-      dragon : '#6F35FC',
-      dark : '#705746',
-      steel : '#B7B7CE',
-      fairy : '#D685AD'
-    }
+const PokemonCardDetails = ({placeholderPic}) => {
 
     let {id} = useParams()
     let [fetchedData, setFetchedData] = useState([])
-    let {name, height, weight, sprites, abilities, types, stats} = fetchedData
-
-
-    console.log(stats);
+    let {name, height, weight, sprites, abilities, types, stats, moves} = fetchedData
 
     // mapping abilities
     let abilityName = ""
@@ -50,9 +28,9 @@ const PokemonCardDetails = () => {
     let badgeCol = ""
     let typeName = ""
     let badgeEls = types?.map((t) => {
-        for (let c in typeColorsArray){
+        for (let c in pokemonTypeColors){
             if (t.type.name === c){
-                badgeCol = typeColorsArray[c]
+                badgeCol = pokemonTypeColors[c]
                 typeName = t.type.name
             }
         }
@@ -79,6 +57,7 @@ const PokemonCardDetails = () => {
         }
         return(
             <PokemonStats
+            key={replacedStatName}
             statName = {replacedStatName}
             statValue = {s.base_stat}    
         />
@@ -86,8 +65,6 @@ const PokemonCardDetails = () => {
         
     })
     
-
-
     let api = `https://pokeapi.co/api/v2/pokemon/${id}`
 
     useEffect(() => {
@@ -100,12 +77,13 @@ const PokemonCardDetails = () => {
     }, [api])
     
         return (
-            <div className="container-lg mt-5 text-light">
+            <div 
+                className="container-lg mt-5 text-light">
                 <div className="row">
                     <div className="col-lg-4 col-12 border-danger border-end border-2">
                         <div className="d-flex flex-column justify-content-center p-4">
                             <img 
-                                src= {sprites?.front_default} 
+                                src= {sprites?.front_default ? sprites?.front_default : placeholderPic} 
                                 alt="" 
                                 className="img-fluid" />
                             <div className="fs-1 text-center text-warning mb-3"  style={{textTransform: "Capitalize"}}>
@@ -116,9 +94,9 @@ const PokemonCardDetails = () => {
                     <div className="col-lg-8 col-12">
                         <div className="mx-4">
                             <p className='text-center display-5'>
-                                <u>PokeDex data</u>
+                                <u>Pokédex Data</u>
                             </p>
-                            <div className="d-flex flex-column gap-4 mt-5 fs-1 text-danger">
+                            <div className="mx-4 d-flex flex-column gap-4 mt-5 fs-1 text-danger">
                             <div>
                                 <span className="text-light">National Dex ID: </span>
                                 No. {id}
@@ -155,6 +133,18 @@ const PokemonCardDetails = () => {
 
                         <div className="container-sm mb-4">
                             {statEls}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="mt-5">
+                        <p className='text-center display-5 mb-4'>
+                            <u>Moves</u>
+                        </p>
+
+                        <div className="container-fluid mb-4">
+                            <PokemonMoves moves = {moves}/>
                         </div>
                     </div>
                 </div>

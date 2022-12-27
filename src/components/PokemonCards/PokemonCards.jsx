@@ -1,30 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import pokemonTypeColors from '../pokemonTypeColors.js'
 
 const PokemonCards = ({page, results, placeholderPic}) => {
   let displayCards;
-  const typeColorsArray =
-    {
-      normal : '#A8A77A',
-      fire : '#EE8130',
-      water : '#6390F0',
-      electric : '#F7D02C',
-      grass : '#7AC74C',
-      ice : '#96D9D6',
-      fighting : '#C22E28',
-      poison : '#A33EA1',
-      ground : '#E2BF65',
-      flying : '#A98FF3',
-      psychic : '#F95587',
-      bug : '#A6B91A',
-      rock : '#B6A136',
-      ghost : '#735797',
-      dragon : '#6F35FC',
-      dark : '#705746',
-      steel : '#B7B7CE',
-      fairy : '#D685AD'
-    }
-
   if (results){
   
     displayCards = results.map((pokemon) => {
@@ -48,9 +27,9 @@ const PokemonCards = ({page, results, placeholderPic}) => {
       // get card color depending on pokemon type
       let bgColor = ""
 
-      for (let c in typeColorsArray) {
+      for (let c in pokemonTypeColors) {
         if (typeEls[0].includes(c)){
-          bgColor = typeColorsArray[c]
+          bgColor = pokemonTypeColors[c]
         }
       }
      
@@ -74,7 +53,7 @@ const PokemonCards = ({page, results, placeholderPic}) => {
                   textTransform: "Capitalize",
               }
             }
-            className="fw-bold fs-3">{name}</div>
+            className="fw-bold fs-3 mx-2">{name}</div>
           <div className="fs-4 mt-1">No. <span className="fw-bold">{id}</span> </div>
           </div>
           <img 
