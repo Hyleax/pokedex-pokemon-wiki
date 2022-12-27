@@ -7,7 +7,8 @@ const TypeBadge = ({typeName, color}) => {
             style={
                 {
                     backgroundColor : `${color}`,
-                    minWidth : "70px"
+                    minWidth : "70px",
+                    minHeight : "22px "
                 }
             }
             className='badge'>{typeName.toUpperCase()}</h1>

@@ -143,7 +143,7 @@ const PokemonCardDetails = ({placeholderPic}) => {
                             <u>Moves</u>
                         </p>
 
-                        <div className="container-fluid mb-4">
+                        <div className="container-sm mb-4">
                             <PokemonMoves moves = {moves}/>
                         </div>
                     </div>

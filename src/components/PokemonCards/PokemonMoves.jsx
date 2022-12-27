@@ -4,8 +4,6 @@ import pokemonTypeColors from '../pokemonTypeColors.js'
 
 const PokemonMoves = ({moves}) => {
     const [pokemonMoves, setPokemonMoves] =  useState([])
-    console.log(pokemonMoves);
-
     let pokemonMovesEl = pokemonMoves.map((move) => {
         // Destructuring the move
         let {name, type, id, damage_class, power, accuracy} = move
@@ -29,7 +27,6 @@ const PokemonMoves = ({moves}) => {
             <tr key={id}
                 className = "text-light text-center"
             >
-                        {/* {moveName} {damage_class.name} {type.name} {power} {accuracy} */}
                 <th scope='row' style={{textTransform : "capitalize"}}>{moveName}</th>
                 <td> <TypeBadge typeName={type.name} color = {color}/> </td>
                 <td>{damage_class.name}</td>
@@ -55,8 +52,8 @@ const PokemonMoves = ({moves}) => {
         })()
     }, [moves])
     return (
-        <div>
-            <table className="table text-light">
+        <div className = "row d-flex justify-content-center">
+            <table className="table text-light" style={{maxWidth : "1000px"}}>
                 <thead>
                     <tr className='text-warning text-center'>
                     <th scope="col">Move</th>
